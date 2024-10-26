@@ -1,22 +1,30 @@
 package cli.commands;
+
 import java.util.Map;
-
 import cli.Command;
+import cli.IOperation;
 
-public class HelpCommand implements cli.Command {
+public class HelpCommand implements Command {
     private Map<String, Command> commands;
-    
-    public HelpCommand(Map<String, Command> commands) {
+    private Map<String, IOperation> operations;
+
+    public HelpCommand(Map<String, Command> commands, Map<String, IOperation> operations) {
         this.commands = commands;
+        this.operations = operations;
     }
 
     @Override
-    public void execute(String[] args) {
-        System.out.println("Available commands:");
-        for(String command : commands.keySet()) {
-            System.out.println(" - " + command);
+    public String execute(String[] args) {
+        StringBuilder helpMessage = new StringBuilder("Available Commands:\n");
+        for (String command : commands.keySet()) {
+            helpMessage.append(" - ").append(command).append("\n");
         }
-        System.out.println("Use 'exit' to quit the CLI.");
+        helpMessage.append("\nAvailable Operations:\n");
+        for (String operation : operations.keySet()) {
+            helpMessage.append(" - ").append(operation).append("\n");
+        }
+        helpMessage.append("\nUse 'exit' to quit the CLI.");
+        System.out.println(helpMessage.toString());
+        return helpMessage.toString();
     }
-    
 }
