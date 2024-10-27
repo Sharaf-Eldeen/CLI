@@ -1,38 +1,51 @@
 package cli.commands;
+
+import cli.CommandLineInterpreter;
 import cli.Command;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class CdCommand implements Command{
-    private static String current_directory = System.getProperty("user.dir");
-    private static final String home_directory=Paths.get("").toAbsolutePath().toString();
+public class CdCommand implements Command {
+    private CommandLineInterpreter cli;
+
+    public CdCommand(CommandLineInterpreter cli) {
+        this.cli = cli;
+    }
 
     @Override
-    public String  execute(String[] args){
+    public String execute(String[] args) {
         if (args.length < 2) {
-            return ("Home directory is required :"+home_directory);
+            return "Home directory is required: " + cli.getCurrentDirectory();
         }
-        String Path = args[1];
-        if (Path.equals("..")) {
-            File parentDir = new File(current_directory).getParentFile();
+
+        String path = args[1];
+        File newDir;
+
+        // Handle ".." to go up one directory
+        if (path.equals("..")) {
+            File parentDir = new File(cli.getCurrentDirectory()).getParentFile();
             if (parentDir != null) {
-                current_directory = parentDir.getAbsolutePath();
-                System.setProperty("user.dir", current_directory);
-                return "Directory changed to: " + current_directory;
+                cli.setCurrentDirectory(parentDir.getAbsolutePath());
+                return "Directory changed to: " + cli.getCurrentDirectory();
             } else {
                 return "Already at the root directory.";
             }
         }
 
-        File newDir = new File(Path);
-
-        if (newDir.isDirectory()) {
-            current_directory = newDir.getAbsolutePath();
-            System.setProperty("user.dir", current_directory);
-            return "Directory changed to: " + current_directory;
+        // Determine if the path is absolute or relative
+        if (Paths.get(path).isAbsolute()) {
+            newDir = new File(path);
         } else {
-            return "Invalid directory: " + Path;
+            newDir = new File(cli.getCurrentDirectory(), path);
+        }
+
+        // Check if the directory exists
+        if (newDir.isDirectory()) {
+            cli.setCurrentDirectory(newDir.getAbsolutePath());
+            return "Directory changed to: " + cli.getCurrentDirectory();
+        } else {
+            return "Invalid directory: " + path;
         }
     }
 }

@@ -1,4 +1,5 @@
 package cli;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -7,6 +8,13 @@ import cli.commands.*;
 public class CommandLineInterpreter {
     private Map<String, Command> commands = new HashMap<>();
     private Map<String, IOperation> operations = new HashMap<>();
+    private String current_directory;
+
+    public CommandLineInterpreter() {
+        this.current_directory = System.getProperty("user.dir"); // Initialize current directory
+        registerOperations();
+        registerCommands();
+    }
 
     private void registerCommands() {
         commands.put("mkdir", new MkdirCommand());
@@ -15,8 +23,8 @@ public class CommandLineInterpreter {
         commands.put("rmdir", new RmdirCommand());
         commands.put("cat", new CatCommand());
         commands.put("echo", new EchoCommand());
-        commands.put("ls",new LsCommand());
-        commands.put("cd",new CdCommand());
+        commands.put("ls", new LsCommand());
+        commands.put("cd", new CdCommand(this)); // Pass the interpreter instance
         commands.put("help", new HelpCommand(commands, operations));
     }
 
@@ -26,6 +34,13 @@ public class CommandLineInterpreter {
         operations.put("|", new PipeOperation(commands));
     }
 
+    public String getCurrentDirectory() {
+        return current_directory;
+    }
+
+    public void setCurrentDirectory(String directory) {
+        this.current_directory = directory;
+    }
 
     private void executeCommand(String[] args) {
         if (args.length >= 3) {
@@ -35,10 +50,10 @@ public class CommandLineInterpreter {
                 return;
             }
         }
-    
+
         String commandName = args[0];
         Command command = commands.get(commandName);
-    
+
         if (command != null) {
             String[] commandArgs = new String[args.length];
             System.arraycopy(args, 0, commandArgs, 0, args.length);
@@ -50,9 +65,6 @@ public class CommandLineInterpreter {
             System.out.println("Unknown Command: " + commandName);
         }
     }
-    
-   
-    
 
     private void HandleRequest(String[] args) {
         String commandName = args[0];
@@ -61,33 +73,24 @@ public class CommandLineInterpreter {
             System.out.println("Unknown Command: " + commandName);
             return;
         }
-    
+
         String[] commandArgs = new String[args.length - 2];
         System.arraycopy(args, 0, commandArgs, 0, args.length - 2);
-    
+
         String result = command.execute(commandArgs);
         if (result == null || result.isEmpty()) {
             return;
         }
-    
+
         String operator = args[args.length - 2];
         String target = args[args.length - 1];
-    
+
         IOperation operation = operations.get(operator);
         if (operation != null) {
             operation.execute(result, target);
         } else {
             System.out.println("Invalid operator: " + operator);
         }
-    }
-    
-    
- 
-    
-
-    public CommandLineInterpreter() {
-         registerOperations();
-        registerCommands();
     }
 
     public void start() {
@@ -114,3 +117,4 @@ public class CommandLineInterpreter {
         cli.start();
     }
 }
+
