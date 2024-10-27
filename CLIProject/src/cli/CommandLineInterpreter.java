@@ -15,7 +15,7 @@ public class CommandLineInterpreter {
         commands.put("rmdir", new RmdirCommand());
         commands.put("cat", new CatCommand());
         commands.put("echo", new EchoCommand());
-        commands.put("cd",new CdCommend());
+     
         commands.put("help", new HelpCommand(commands, operations));
     }
 
