@@ -22,7 +22,6 @@ public class CdCommand implements Command {
         String path = args[1];
         File newDir;
 
-        // Handle ".." to go up one directory
         if (path.equals("..")) {
             File parentDir = new File(cli.getCurrentDirectory()).getParentFile();
             if (parentDir != null) {
@@ -33,14 +32,12 @@ public class CdCommand implements Command {
             }
         }
 
-        // Determine if the path is absolute or relative
         if (Paths.get(path).isAbsolute()) {
             newDir = new File(path);
         } else {
             newDir = new File(cli.getCurrentDirectory(), path);
         }
 
-        // Check if the directory exists
         if (newDir.isDirectory()) {
             cli.setCurrentDirectory(newDir.getAbsolutePath());
             return "Directory changed to: " + cli.getCurrentDirectory();

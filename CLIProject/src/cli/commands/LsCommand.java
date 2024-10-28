@@ -1,16 +1,24 @@
 package cli.commands;
 
+import cli.CommandLineInterpreter;
+
 import java.io.File;
 import java.util.Arrays;
 
 public class LsCommand implements cli.Command {
+    private CommandLineInterpreter cli;
+
+    public LsCommand(CommandLineInterpreter cli) {
+        this.cli = cli;
+    }
+
     @Override
     public String execute(String[] args) {
         File dir;
         if (args.length > 1 && !args[1].startsWith("-")) {
             dir = new File(args[1]);
         } else {
-            dir = new File(System.getProperty("user.dir"));
+            dir = new File(cli.getCurrentDirectory());
         }
 
         if (!dir.isDirectory()) {

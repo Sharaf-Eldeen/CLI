@@ -23,8 +23,8 @@ public class CommandLineInterpreter {
         commands.put("rmdir", new RmdirCommand());
         commands.put("cat", new CatCommand());
         commands.put("echo", new EchoCommand());
-        commands.put("ls", new LsCommand());
-        commands.put("cd", new CdCommand(this)); // Pass the interpreter instance
+        commands.put("ls", new LsCommand(this));
+        commands.put("cd", new CdCommand(this));
         commands.put("help", new HelpCommand(commands, operations));
     }
 
