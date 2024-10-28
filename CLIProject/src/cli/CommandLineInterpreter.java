@@ -17,10 +17,10 @@ public class CommandLineInterpreter {
     }
 
     private void registerCommands() {
-        commands.put("mkdir", new MkdirCommand());
+        commands.put("mkdir", new MkdirCommand(this));
         commands.put("mv", new MvCommand());
         commands.put("rm", new RmCommand());
-        commands.put("rmdir", new RmdirCommand());
+        commands.put("rmdir", new RmdirCommand(this));
         commands.put("cat", new CatCommand());
         commands.put("echo", new EchoCommand());
         commands.put("ls", new LsCommand(this));
