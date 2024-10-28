@@ -31,8 +31,8 @@ public class CommandLineInterpreter {
     }
 
     private void registerOperations() {
-        operations.put(">", new WriteOperation());
-        operations.put(">>", new AppendOperation());
+        operations.put(">", new WriteOperation(this));
+        operations.put(">>", new AppendOperation(this));
         operations.put("|", new PipeOperation(commands));
     }
 

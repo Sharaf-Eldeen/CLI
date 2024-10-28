@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cli.CommandLineInterpreter;
+
 // import cli.commands.RmdirCommand;
 
 public class RmdirCommandTest {
@@ -17,7 +19,7 @@ public class RmdirCommandTest {
 
     @Before
     public void setUp() throws IOException {
-        rmdirCommand = new RmdirCommand();
+        rmdirCommand = new RmdirCommand(new CommandLineInterpreter());
 
         File dir = new File("testDir");
         assertTrue(dir.mkdir());

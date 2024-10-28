@@ -2,6 +2,8 @@ package cli.Operations;
 import cli.commands.CatCommand;
 import org.junit.Test;
 import cli.Command;
+import cli.CommandLineInterpreter;
+
 import org.junit.After;
 import org.junit.Before;
 import java.io.File;
@@ -21,9 +23,7 @@ public class PipeOperationTest {
     @Before
     public void setUp() throws IOException {
         commands = new HashMap<>();
-        commands.put("cat", new CatCommand());
-     
-
+        commands.put("cat", new CatCommand(new CommandLineInterpreter()));
         testFile = new File("testCatFile.txt");
         try (FileWriter writer = new FileWriter(testFile)) {
             writer.write("File content for cat.\n");

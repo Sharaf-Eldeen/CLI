@@ -1,6 +1,8 @@
 package cli.Operations;
 
+import cli.CommandLineInterpreter;
 import cli.commands.AppendOperation;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,7 @@ public class AppendOperationTest {
 
     @Before
     public void setUp() throws IOException {
-        appendOperation = new AppendOperation();
+        appendOperation = new AppendOperation(new CommandLineInterpreter());
         testFile = new File("testAppendFile.txt");
         try (FileWriter writer = new FileWriter(testFile)) {
             writer.write("Initial content.\n");

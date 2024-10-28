@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cli.CommandLineInterpreter;
+
 // import cli.commands.RmCommand;
 
 public class RmCommandTest {
@@ -18,7 +20,7 @@ public class RmCommandTest {
 
     @Before
     public void setUp() throws IOException {
-        rmCommand = new RmCommand();
+        rmCommand = new RmCommand(new CommandLineInterpreter());
 
         File file = new File("testFile.txt");
         assertTrue(file.createNewFile());

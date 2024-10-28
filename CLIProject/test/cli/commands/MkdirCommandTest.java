@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cli.CommandLineInterpreter;
+
 // import cli.commands.*;
 
 
@@ -16,7 +18,7 @@ public class MkdirCommandTest {
 
     @Before
     public void setup() {
-        Mkdircommand = new MkdirCommand();
+        Mkdircommand = new MkdirCommand(new CommandLineInterpreter());
     }
 
     @After

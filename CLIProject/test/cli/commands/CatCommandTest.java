@@ -9,16 +9,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cli.CommandLineInterpreter;
+
 public class CatCommandTest {
     private CatCommand catCommand;
     private File testFile1;
     private File testFile2;
 
-
     @Before
     public void setUp() throws IOException {
-        
-        catCommand = new CatCommand();
+          
+
+  
+        catCommand = new CatCommand(new CommandLineInterpreter());
 
         // Create test files with content
         testFile1 = new File("testFile1.txt");

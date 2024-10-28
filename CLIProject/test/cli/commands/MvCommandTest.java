@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cli.CommandLineInterpreter;
+
 // import cli.commands.MvCommand;
 
 import static org.junit.Assert.assertFalse;
@@ -17,7 +19,7 @@ public class MvCommandTest {
 
     @Before
     public void setup() throws IOException {
-        Mvcommand = new MvCommand();
+        Mvcommand = new MvCommand(new CommandLineInterpreter());
         File srcFile = new File("testFile.txt");
         assertTrue(srcFile.createNewFile());
     }

@@ -1,5 +1,6 @@
 package cli.Operations;
 
+import cli.CommandLineInterpreter;
 import cli.commands.WriteOperation;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +20,7 @@ public class WriteOperationTest {
 
     @Before
     public void setUp() {
-        writeOperation = new WriteOperation();
+        writeOperation = new WriteOperation(new CommandLineInterpreter());
         testFile = new File("testWriteFile.txt");
     }
 
