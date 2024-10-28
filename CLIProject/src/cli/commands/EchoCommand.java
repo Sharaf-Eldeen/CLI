@@ -1,8 +1,8 @@
 package cli.commands;
 
-import cli.Command;
 
-public class EchoCommand implements Command {
+
+public class EchoCommand implements cli.Command {
 
     @Override
     public String execute(String[] args) {
