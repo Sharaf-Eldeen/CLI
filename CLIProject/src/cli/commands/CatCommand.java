@@ -4,9 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import cli.CLIUtils;
+import cli.CommandLineInterpreter;
 
 public class CatCommand implements cli.Command {
+    private CommandLineInterpreter cli;
 
+    public CatCommand(CommandLineInterpreter cli) {
+        this.cli = cli;
+    }
     @Override
     public String execute(String[] args) {
         if (!CLIUtils.validateArguments(args, 2, "You should provide at least one file name")) {
@@ -16,7 +21,7 @@ public class CatCommand implements cli.Command {
         StringBuilder result = new StringBuilder();
 
         for (int i = 1; i < args.length; i++) {
-            File file = new File(args[i]);
+            File file = new File(cli.getCurrentDirectory(), args[i]);
 
             if (!file.exists()) {
                 result.append("File does not exist: ").append(args[i]).append("\n");

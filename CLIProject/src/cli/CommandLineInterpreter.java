@@ -21,10 +21,12 @@ public class CommandLineInterpreter {
         commands.put("mv", new MvCommand(this));
         commands.put("rm", new RmCommand(this));
         commands.put("rmdir", new RmdirCommand(this));
-        commands.put("cat", new CatCommand());
+        commands.put("cat", new CatCommand(this));
+        commands.put("touch", new TouchCommand(this));
         commands.put("echo", new EchoCommand());
         commands.put("ls", new LsCommand(this));
         commands.put("cd", new CdCommand(this));
+        commands.put("pwd", new PwdCommand(this));
         commands.put("help", new HelpCommand(commands, operations));
     }
 
