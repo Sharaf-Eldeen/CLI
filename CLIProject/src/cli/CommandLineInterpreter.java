@@ -18,8 +18,8 @@ public class CommandLineInterpreter {
 
     private void registerCommands() {
         commands.put("mkdir", new MkdirCommand(this));
-        commands.put("mv", new MvCommand());
-        commands.put("rm", new RmCommand());
+        commands.put("mv", new MvCommand(this));
+        commands.put("rm", new RmCommand(this));
         commands.put("rmdir", new RmdirCommand(this));
         commands.put("cat", new CatCommand());
         commands.put("echo", new EchoCommand());
