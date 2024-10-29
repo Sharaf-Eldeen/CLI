@@ -1,70 +1,69 @@
-// package cli.commands;
-// import org.junit.After;
-// import org.junit.Before;
-// import org.junit.Test;
-// import static org.junit.jupiter.api.Assertions.assertFalse;
-// import static org.junit.jupiter.api.Assertions.assertEquals;
+package cli.commands;
 
-// class LsCommandTest {
-//     @Test
-//     void testExecuteCurrentDirectory() {
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-//         LsCommand lsCommand = new LsCommand();
-//         lsCommand.execute(new String[]{"ls"});
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.PrintStream;
 
-//         String output = outputStream.toString().trim();
-//         File currentDir = new File(System.getProperty("user.dir"));
-//         assertTrue(output.contains(currentDir.getName()), "Output should list current directory files and folders");
-//     }
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-//     @Test
-//     void testExecuteHiddenFiles() {
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
+public class LsCommandTest {
+    private LsCommand lsCommand;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
-//         LsCommand lsCommand = new LsCommand();
-//         lsCommand.execute(new String[]{"ls", "-a"});
+    @Before
+    public void setUp() {
+        System.setOut(new PrintStream(outputStream));
+        lsCommand = new LsCommand();
+    }
 
-//         String output = outputStream.toString().trim();
-//         assertTrue(output.contains(".hiddenFile"), "Output should contain hidden files when -a flag is used");
-//     }
+    @After
+    public void tearDown() {
+        System.setOut(originalOut);
+        outputStream.reset();
+    }
 
-//     @Test
-//     void testExecuteReverseOrder() {
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
+    @Test
+    public void testExecuteCurrentDirectory() {
+        lsCommand.execute(new String[]{"ls"});
+        String output = outputStream.toString().trim();
+        File currentDir = new File(System.getProperty("user.dir"));
+        assertTrue("Output should list current directory files and folders", output.contains(currentDir.getName()));
+    }
 
-//         LsCommand lsCommand = new LsCommand();
-//         lsCommand.execute(new String[]{"ls", "-r"}); // List in reverse order
+    @Test
+    public void testExecuteHiddenFiles() {
+        lsCommand.execute(new String[]{"ls", "-a"});
+        String output = outputStream.toString().trim();
+        assertTrue("Output should contain hidden files when -a flag is used", output.contains(".hiddenFile"));
+    }
 
-//         String output = outputStream.toString().trim();
-//         String[] lines = output.split("\\n");
+    @Test
+    public void testExecuteReverseOrder() {
+        lsCommand.execute(new String[]{"ls", "-r"});
+        String output = outputStream.toString().trim();
+        String[] lines = output.split("\\n");
+        assertTrue("Output should be in reverse alphabetical order", lines[0].compareTo(lines[lines.length - 1]) > 0);
+    }
 
-//         assertTrue(lines[0].compareTo(lines[lines.length - 1]) > 0, "Output should be in reverse alphabetical order");
-//     }
+    @Test
+    public void testExecuteSpecificDirectory() {
+        lsCommand.execute(new String[]{"ls", "src"});
+        String output = outputStream.toString().trim();
+        assertTrue("Output should list files in the specified 'src' directory", output.contains("src"));
+    }
 
-//     @Test
-//     void testExecuteSpecificDirectory() {
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
+    @Test
+    public void testExecuteNonexistentDirectory() {
+        String output = lsCommand.execute(new String[]{"ls", "nonexistentDir"});
+        assertEquals("Output should show an error for nonexistent directory",
+                "Cannot access directory: nonexistentDir", output);
+    }
+}
 
-//         LsCommand lsCommand = new LsCommand();
-//         lsCommand.execute(new String[]{"ls", "src"}); // Specify "src" directory
-
-//         String output = outputStream.toString().trim();
-//         assertTrue(output.contains("src"), "Output should list files in the specified 'src' directory");
-//     }
-
-//     @Test
-//     void testExecuteNonexistentDirectory() {
-//         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//         System.setOut(new PrintStream(outputStream));
-
-//         LsCommand lsCommand = new LsCommand();
-//         String output = lsCommand.execute(new String[]{"ls", "nonexistentDir"});
-
-//         assertEquals("Cannot access directory: nonexistentDir", output, "Output should show an error for nonexistent directory");
-//     }
-// }
