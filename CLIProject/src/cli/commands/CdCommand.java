@@ -3,12 +3,12 @@ package cli.commands;
 import cli.CommandLineInterpreter;
 import cli.Command;
 import java.io.File;
-import java.nio.file.Path;
+//import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CdCommand implements Command {
     private CommandLineInterpreter cli;
-
+    private static final String home_directory=Paths.get("").toAbsolutePath().toString();
     public CdCommand(CommandLineInterpreter cli) {
         this.cli = cli;
     }
@@ -23,12 +23,11 @@ public class CdCommand implements Command {
         File newDir;
 
         if (path.equals("..")) {
+            if((cli.getCurrentDirectory()).equals(home_directory)) return "Already at the root directory.";
             File parentDir = new File(cli.getCurrentDirectory()).getParentFile();
             if (parentDir != null) {
                 cli.setCurrentDirectory(parentDir.getAbsolutePath());
                 return "Directory changed to: " + cli.getCurrentDirectory();
-            } else {
-                return "Already at the root directory.";
             }
         }
 
