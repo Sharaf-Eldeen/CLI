@@ -3,12 +3,12 @@ package cli.commands;
 import cli.CommandLineInterpreter;
 import cli.Command;
 import java.io.File;
-//import java.nio.file.Path;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class CdCommand implements Command {
     private CommandLineInterpreter cli;
-    private static final String home_directory=Paths.get("").toAbsolutePath().toString();
+    private static final String home_directory=System.getProperty("user.home");
     public CdCommand(CommandLineInterpreter cli) {
         this.cli = cli;
     }

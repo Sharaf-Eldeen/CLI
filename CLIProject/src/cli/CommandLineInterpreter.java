@@ -11,7 +11,7 @@ public class CommandLineInterpreter {
     private String current_directory;
 
     public CommandLineInterpreter() {
-        this.current_directory = System.getProperty("user.dir"); // Initialize current directory
+        this.current_directory = System.getProperty("user.dir"); 
         registerOperations();
         registerCommands();
     }
