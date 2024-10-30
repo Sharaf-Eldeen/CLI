@@ -9,9 +9,8 @@ import java.util.HashSet;
 public class PipeOperation implements IOperation {
     private Map<String, Command> commands;
 
-   
-    private static final Set<String> allowedCommands = new HashSet<>(Set.of(
-            "echo", "cat"
+  private static final Set<String> allowedCommands = new HashSet<>(Set.of(
+            "echo", "cat","mkdir","mv" ,"rm", "rmdir","touch","ls", "pwd"
     ));
 
     public PipeOperation(Map<String, Command> commands) {
