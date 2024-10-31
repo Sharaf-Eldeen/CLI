@@ -39,7 +39,7 @@ public class TouchCommandTest {
     }
 
     @Test
-    // test one: checks if the new file is created or not by calling th funtion and pathing a nam for the file and
+    // test1: checks if the new file is created or not by calling th funtion and pathing a nam for the file and
     // then check for if the file created or not then check if the output is as i want or not
     public void testFileCreation() {
         String fileName = "newFile.txt";
@@ -50,7 +50,7 @@ public class TouchCommandTest {
     }
 
     @Test
-    // test two: checking the case of an exixting file by creating a file in the curr dir and then call the function to create it
+    // test2: checking the case of an exixting file by creating a file in the curr dir and then call the function to create it
     // and then check if the output as i want or not
     public void testFileAlreadyExists() throws IOException {
         Files.createFile(testdir.resolve("existingFile.txt"));
@@ -61,16 +61,16 @@ public class TouchCommandTest {
     }
 
     @Test
-    // thest three: check if the function handles the missing args or not
-    public void testMissingFileNameArgument() {
+    // thest3: check if the function handles the missing args or not
+    public void testMissingArgs() {
         String output = touchCommand.execute(new String[]{"touch"});
         
         assertEquals("Usage: touch <filename>", output);
     }
 
     @Test
-    // checking if the given path has dirs not created so the function should create them and then crete the file in the write path
-    public void testDirectoryCreationAndFileCreation() {
+    // test4:checking if the given path has dirs not created so the function should create them and then crete the file in the write path
+    public void testCompletePathCreation() {
         String nestedFilePath = "nestedDir/newFile.txt";
         String output = touchCommand.execute(new String[]{"touch", nestedFilePath});
         
