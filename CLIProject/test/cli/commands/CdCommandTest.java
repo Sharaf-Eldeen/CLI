@@ -20,7 +20,7 @@ public class CdCommandTest {
     private CommandLineInterpreter cli;
     private Path testDir;
     private Path subDir;
-    private static final String home_directory=Paths.get("").toAbsolutePath().toString();
+    private static final String home_directory=System.getProperty("user.home");
 
     @Before
     public void setUp() throws IOException {
