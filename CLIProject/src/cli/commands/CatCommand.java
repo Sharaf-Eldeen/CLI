@@ -2,7 +2,6 @@ package cli.commands;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import cli.CLIUtils;
 import cli.CommandLineInterpreter;
 
 public class CatCommand implements cli.Command {
@@ -11,11 +10,15 @@ public class CatCommand implements cli.Command {
     public CatCommand(CommandLineInterpreter cli) {
         this.cli = cli;
     }
+
     @Override
     public String execute(String[] args) {
-        if (!CLIUtils.validateArguments(args, 2, "You should provide at least one file name")) {
-            return "You should provide at least one file name";
+    
+        if (args.length == 1) {     
+            Scanner scanner = new Scanner(System.in);
+            return scanner.nextLine();
         }
+
 
         StringBuilder result = new StringBuilder();
 
