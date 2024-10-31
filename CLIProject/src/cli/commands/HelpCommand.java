@@ -21,7 +21,7 @@ public class HelpCommand implements Command {
         helpMessage.append(" - pwd: Print the current working directory.\n");
         helpMessage.append(" - mkdir: Create a new directory.\n");
         helpMessage.append(" - rmdir: Remove an empty directory.\n");
-        helpMessage.append(" - touch: Create a new file or update the timestamp of an existing file.\n");
+        helpMessage.append(" - touch: Create a new file and create all missing dirs in the given path.\n");
         helpMessage.append(" - cat: Concatenate and display file contents.\n");
         helpMessage.append(" - echo: Display a line of text or variables.\n");
         helpMessage.append(" - mv: Move or rename files and directories.\n");
